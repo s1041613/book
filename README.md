@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # book
 
 ## Project setup
@@ -32,3 +33,6 @@ npm run test:unit
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+=======
+# book
+>>>>>>> 3cf31d2f07a52084a3ea80481a9cbdf193c5d1b5
