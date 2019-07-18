@@ -63,14 +63,23 @@ export default {
 
     },
     callUpdatedApi(){
+      let updated = false
       let author = this.bookInfo.author
       let publicationDate = this.bookInfo.publicationDate
       let description = this.bookInfo.description
+      let newReview = []
       let updatedBook = this.currentBook.map((e) => {
         if(e.author == author && e.publicationDate == publicationDate && e.description == description){
           alert("你尚未更新喔～")
-        }
-        else{
+        }else{
+          updated = true
+          //修改reviews格式！！不然會掛掉
+          e.reviews.map((r)=>{
+            newReview.push(r['@id'])
+          })
+          this.$set(e, 'reviews',newReview)
+
+          //更新編輯資料
           if(e.author != author){
             this.$set(e, 'author',author)
           }
@@ -81,22 +90,35 @@ export default {
             this.$set(e,'description',description)
           }
         }
-        console.log("my updatedInfo",e)
         return e
       }
       );
-
-      let rs = { "book" : updatedBook[0] }
-      let id = updatedBook[0]["@id"]
-      let url = "https://demo.api-platform.com" + id 
-      axios.put(url,rs)
-        .then(response => {
-          console.log('updated good', response)
-          alert('修改成功～～')
-          this.$router.push({path:'/bookList'})
-        }, error => {
-          console.log('updated bad', error)
-        })
+      if(updated){
+        let rs = {
+          "@id":updatedBook[0]['@id'],
+          "@type":updatedBook[0]['@type'],
+          "isbn":updatedBook[0].isbn,
+          "title":updatedBook[0].title,
+          "description":updatedBook[0].description,
+          "author":updatedBook[0].author,
+          "publicationDate":updatedBook[0].publicationDate,
+          "reviews":updatedBook[0].reviews,
+          "id":updatedBook[0]['@id'],
+          "@context":"/contexts/Book"
+          }
+        let id = updatedBook[0]["@id"]
+        let url = "https://demo.api-platform.com" + id 
+        axios.put(url,rs)
+          .then(response => {
+            console.log('updated good', response)
+            this.$store.dispatch('actionChangeEditState')
+            alert('修改成功～～')
+            this.$router.push({path:'/bookList'})
+          }, error => {
+            alert('修改失敗～～')
+            console.log('updated bad', error)
+          })
+      }
     }
   },
   computed:{

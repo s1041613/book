@@ -31,9 +31,11 @@ export default {
   },
 
   created() {
+
     if(this.$route.meta.page == 0){
       this.$router.push({path:'/bookList'})
     }
+
   },
   mounted(){
 
@@ -53,25 +55,27 @@ export default {
       if(this.getBookTitle.length < 1  ||  this.getBookAuthor.length < 1  ||  this.getBookPublicationDate.length < 1  ||  this.getBookDescription.length < 1){
         alert('資料還沒填完喔～')
       }else{
+        
         let createBook={
-          title:this.getBookTitle,
-          author:this.getBookAuthor,
-          publicationDate:this.getBookPublicationDate,
-          description:this.getBookDescription,
+          "title":this.getBookTitle,
+          "description":this.getBookDescription,
+          "author":this.getBookAuthor,
+          "publicationDate":this.getBookPublicationDate
         }
-        console.log('createBook',createBook)
 
         axios.post("https://demo.api-platform.com/books",createBook)
           .then(response => {
             console.log('create good', response)
             this.$store.dispatch('actionCleanBook')
+            alert('新增成功～～')
+            this.$router.push({path:'/bookList'})
       
           }, error => {
+            alert('新增失敗～～')
             console.log('create bad', error)
           })
         
-        alert('新增成功～～')
-        this.$router.push({path:'/bookList'})
+
       }
     },
   },

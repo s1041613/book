@@ -7,6 +7,7 @@ export default new Vuex.Store({
   plugins: [createPersistedState()],
 
   state: {
+    page:"",
     //未整理
     bookList:[],
     //整理好
@@ -56,6 +57,9 @@ export default new Vuex.Store({
     },
     saveBookId: (state,value) => {
       state.bookId = value;
+    },
+    savePage: (state,value) => {
+      state.page = value;
     },
     changeEditState: (state) => {
       state.editState = !state.editState;

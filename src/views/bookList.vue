@@ -36,19 +36,42 @@ export default {
 
   created() {
     this.callGetBookListApi()
+    //this.test()
+
   },
   mounted(){
+    //this.callGetBookListApi()
     
   },
   methods: {
+    test(){
+
+      axios.get('https://demo.api-platform.com/books')
+        .then(response => {
+          console.log('esponse ',response )
+          // part= response.data['hydra:member']
+          // if(part.length > 1){
+          //   part.forEach((item,pos,self)=>{
+          //     bookList.push(item)
+          //   }) 
+          //   this.$store.commit('saveBookList',bookList)   
+          // }
+      }
+      , error => {
+        console.log('error msg', error)
+      })
+     
+    },
     callGetBookListApi(){
       let part = []
       let bookList=[]
       for(let i=1 ; i<=10 ; i++){
         let num = JSON.stringify(i)
         let params={ page : num }
-        axios.get('https://demo.api-platform.com/books',{params})
+
+        axios.get('https://demo.api-platform.com/books?order[id]=DESC',{params})
           .then(response => {
+            
             part= response.data['hydra:member']
             if(part.length > 1){
               part.forEach((item,pos,self)=>{
