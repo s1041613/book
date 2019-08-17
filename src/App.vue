@@ -32,6 +32,7 @@ export default {
   },
 
   created() {
+    console.log('frrf')
 
     if(this.$route.meta.page == 0){
       this.$router.push({path:'/bookList'})
