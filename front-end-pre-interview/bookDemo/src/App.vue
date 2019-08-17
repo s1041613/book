@@ -20,7 +20,6 @@
 // import Vue from 'vue'
 import axios from 'axios'
 import store from './store.js'
-import { Promise } from 'q';
 export default {
   components: {
   },
@@ -39,7 +38,7 @@ export default {
 
   },
   mounted(){
-    //console.log('this',this)
+    console.log('this',this)
 
   },
   methods: {
@@ -63,7 +62,8 @@ export default {
           "description":this.getBookDescription,
           "author":this.getBookAuthor,
           "publicationDate":this.getBookPublicationDate
-        }        
+        }
+
         axios.post("https://demo.api-platform.com/books",createBook)
           .then(response => {
             console.log('create good', response)
